@@ -1,6 +1,6 @@
 $mailboxname = ""
 $mailaddres = $mailboxname + "domain"
-$beheerder = ""
+$Owner = = ""
 $Securitygroupname = $mailboxname + "_autorisatie" 
 $Securitygroupmail= $Securitygroupname + "domain"
 
@@ -13,3 +13,6 @@ New-Mailbox -Shared -name $mailboxname -PrimarySmtpAddress $mailaddres
 Add-MailboxPermission -Identity $mailaddres -User $Securitygroupmail -AccessRights FullAccess
 Add-RecipientPermission -Identity $mailaddres -AccessRights SendAs -Trustee $Securitygroupmail
 get-MailboxPermission -Identity $mailaddres
+Set-DistributionGroup -Identity $Securitygroupname -ManagedBy @{Add=$Owner}
+	
+Add-DistributionGroupMember -Identity $Securitygroupname -Member $Owner
